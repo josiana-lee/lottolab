@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.35; }
+    }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; background:#07080F; color:#E8EDF5; font-family:'Space Grotesk',system-ui,sans-serif;">
+
+  <!-- NAV -->
+  <nav style="height:62px; display:flex; align-items:center; justify-content:space-between; padding:0 36px; border-bottom:1px solid rgba(255,255,255,0.06); position:sticky; top:0; z-index:100; background:rgba(7,8,15,0.94); backdrop-filter:blur(14px);">
+    <div style="display:flex; align-items:center; gap:11px;">
+      <div style="width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#00E5FF 0%,#005BFF 100%); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <span style="font-family:'JetBrains Mono',monospace; font-weight:700; font-size:16px; color:#000; letter-spacing:-1px;">L²</span>
+      </div>
+      <span style="font-size:17px; font-weight:700; letter-spacing:-0.5px;">Lotto <span style="font-family:'JetBrains Mono',monospace; color:#00E5FF; font-size:16px; letter-spacing:1px;">LAB</span></span>
+    </div>
+    <span style="display:flex; align-items:center; gap:6px; font-size:13px; color:#4A5A72; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07); padding:5px 14px; border-radius:20px;">
+      <span style="width:5px; height:5px; border-radius:50%; background:#00E5FF; display:inline-block; animation:blink 2s ease-in-out infinite;"></span>
+      당첨 보장 없음 · 과거 분포 분석 도구
+    </span>
+  </nav>
+
+  <!-- MAIN -->
+  <main style="max-width:1100px; margin:0 auto; padding:36px 24px 80px;">
+
+    <!-- STATUS STRIP -->
+    <div style="display:grid; grid-template-columns:1fr 1fr 1.7fr; gap:14px; margin-bottom:32px;">
+      <div style="background:#0C1220; border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:22px 24px;">
+        <div style="font-size:11px; color:#8A9BB0; text-transform:uppercase; letter-spacing:1.4px; font-weight:600; margin-bottom:10px;">총 저장 회차</div>
+        <div style="display:flex; align-items:baseline; gap:5px;">
+          <span style="font-size:34px; font-weight:700; font-family:'JetBrains Mono',monospace; line-height:1;">1229</span>
+          <span style="font-size:14px; color:#4A5A72;">회</span>
+        </div>
+      </div>
+      <div style="background:#0C1220; border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:22px 24px;">
+        <div style="font-size:11px; color:#8A9BB0; text-transform:uppercase; letter-spacing:1.4px; font-weight:600; margin-bottom:10px;">최신 저장 회차</div>
+        <div style="display:flex; align-items:baseline; gap:5px;">
+          <span style="font-size:34px; font-weight:700; font-family:'JetBrains Mono',monospace; line-height:1;">1229</span>
+          <span style="font-size:14px; color:#4A5A72;">회</span>
+        </div>
+      </div>
+      <div style="background:#0C1220; border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+        <div>
+          <div style="font-size:11px; color:#8A9BB0; text-transform:uppercase; letter-spacing:1.4px; font-weight:600; margin-bottom:10px;">마지막 동기화</div>
+          <div style="font-size:14px; font-weight:600; font-family:'JetBrains Mono',monospace; color:#C8D4E8;">2026-06-21 02:00</div>
+        </div>
+        <button style="flex-shrink:0; background:rgba(0,229,255,0.07); border:1px solid rgba(0,229,255,0.22); color:#00E5FF; border-radius:10px; padding:10px 18px; font-size:13px; font-weight:600; cursor:pointer; font-family:'Space Grotesk',sans-serif; white-space:nowrap;">최신 회차 동기화</button>
+      </div>
+    </div>
+
+    <!-- GENERATE CTA -->
+    <div style="background:#0C1220; border:1px solid rgba(0,229,255,0.1); border-radius:24px; padding:56px 40px; text-align:center; margin-bottom:32px; position:relative; overflow:hidden;">
+      <div style="position:absolute; top:-120px; right:-120px; width:400px; height:400px; background:radial-gradient(circle,rgba(0,229,255,0.04) 0%,transparent 65%); pointer-events:none;"></div>
+      <div style="position:absolute; bottom:-100px; left:-100px; width:320px; height:320px; background:radial-gradient(circle,rgba(0,91,255,0.05) 0%,transparent 65%); pointer-events:none;"></div>
+      <div style="position:relative; z-index:1;">
+        <div style="display:inline-flex; align-items:center; gap:7px; background:rgba(0,229,255,0.07); border:1px solid rgba(0,229,255,0.18); border-radius:20px; padding:5px 14px; margin-bottom:22px;">
+          <span style="width:5px; height:5px; border-radius:50%; background:#00E5FF; display:inline-block;"></span>
+          <span style="font-size:11px; color:#00E5FF; font-weight:700; letter-spacing:1.8px; text-transform:uppercase;">조합 생성기</span>
+        </div>
+        <h1 style="font-size:30px; font-weight:700; margin:0 0 14px; letter-spacing:-0.8px; line-height:1.25;">아직 나오지 않은 분석 조합</h1>
+        <p style="color:#5A6A82; margin:0 0 38px; font-size:15px; line-height:1.75; max-width:420px; margin-left:auto; margin-right:auto;">과거 1,229회 당첨 데이터를 분석하여<br>한 번도 당첨된 적 없는 조합 5개를 생성합니다</p>
+        <button style="background:linear-gradient(135deg,#00E5FF 0%,#005BFF 100%); color:#000; font-weight:700; font-size:16px; border:none; border-radius:14px; padding:19px 48px; cursor:pointer; font-family:'Space Grotesk',sans-serif; letter-spacing:-0.3px; min-width:290px;">아직 나오지 않은 조합 5개 생성</button>
+        <p style="font-size:12px; color:#6B7A96; margin:18px 0 0;">모든 조합의 당첨 확률은 동일합니다 (1 / 8,145,060)</p>
+      </div>
+    </div>
+
+    <!-- COMBO CARD EXAMPLE -->
+    <div style="margin-bottom:52px;">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+        <h2 style="font-size:19px; font-weight:700; margin:0; letter-spacing:-0.4px;">분석 조합 결과</h2>
+        <span style="background:rgba(0,229,255,0.09); color:#00E5FF; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; padding:3px 10px; border-radius:20px; letter-spacing:0.8px;">5 COMBOS</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <!-- Combo Card -->
+        <div style="background:#0C1220; border:1px solid rgba(255,255,255,0.07); border-radius:20px; padding:26px 30px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#5A6A7A; font-weight:700;">#1</span>
+              <div style="display:flex; gap:10px; align-items:center;">
+                <div style="width:52px; height:52px; border-radius:50%; background:#FBC400; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:17px; color:#1a1200; box-shadow:0 4px 18px rgba(251,196,0,0.5);">7</div>
+                <div style="width:52px; height:52px; border-radius:50%; background:#69C8F2; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:17px; color:#012840; box-shadow:0 4px 18px rgba(105,200,242,0.5);">15</div>
+                <div style="width:52px; height:52px; border-radius:50%; background:#FF7272; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:17px; color:#fff; box-shadow:0 4px 18px rgba(255,114,114,0.5);">23</div>
+                <div style="width:52px; height:52px; border-radius:50%; background:#AAB8CC; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:17px; color:#1a2030; box-shadow:0 4px 18px rgba(170,184,204,0.45);">34</div>
+                <div style="width:52px; height:52px; border-radius:50%; background:#58D68D; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:17px; color:#01301d; box-shadow:0 4px 18px rgba(88,214,141,0.5);">41</div>
+                <div style="width:52px; height:52px; border-radius:50%; background:#FBC400; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:17px; color:#1a1200; box-shadow:0 4px 18px rgba(251,196,0,0.5);">9</div>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:22px;">
+              <div style="text-align:center; min-width:76px;">
+                <div style="font-size:10px; color:#7A8BA8; text-transform:uppercase; letter-spacing:1.2px; margin-bottom:5px; font-weight:700;">L·L Score</div>
+                <div style="font-size:32px; font-weight:700; font-family:'JetBrains Mono',monospace; color:#00E5FF; line-height:1;">86.2</div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:9px;">
+                <div style="display:flex; gap:6px;">
+                  <span style="font-size:12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:7px; padding:4px 11px; color:#7A8BA8; font-family:'JetBrains Mono',monospace;">합계 <span style="color:#C8D4E8; font-weight:700;">129</span></span>
+                  <span style="font-size:12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:7px; padding:4px 11px; color:#7A8BA8; font-family:'JetBrains Mono',monospace;">홀짝 <span style="color:#C8D4E8; font-weight:700;">3:3</span></span>
+                  <span style="font-size:12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:7px; padding:4px 11px; color:#7A8BA8; font-family:'JetBrains Mono',monospace;">저고 <span style="color:#C8D4E8; font-weight:700;">3:3</span></span>
+                </div>
+                <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <span style="font-size:11px; color:#5A6A7A; background:rgba(255,255,255,0.03); border-radius:4px; padding:2px 8px;">· 과거 당첨 이력이 없는 조합</span>
+                  <span style="font-size:11px; color:#5A6A7A; background:rgba(255,255,255,0.03); border-radius:4px; padding:2px 8px;">· 홀짝 균형 3:3</span>
+                  <span style="font-size:11px; color:#5A6A7A; background:rgba(255,255,255,0.03); border-radius:4px; padding:2px 8px;">· 저고 균형 3:3</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:13px; padding-top:11px; border-top:1px solid rgba(255,255,255,0.05); display:flex; justify-content:flex-end;">
+            <button style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:#6B7A96; border-radius:8px; padding:7px 16px; font-size:13px; font-weight:600; cursor:pointer; font-family:'Space Grotesk',sans-serif;">+ 저장</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NUMBER HEATMAP HEADER -->
+    <div style="margin-bottom:40px;">
+      <h2 style="font-size:19px; font-weight:700; margin:0 0 5px; letter-spacing:-0.4px;">번호별 출현 현황</h2>
+      <p style="font-size:13px; color:#4A5A72; margin:0 0 16px;">전체 1,229회 기준 · 밝을수록 출현 빈도 높음</p>
+      <div style="background:#0C1220; border:1px solid rgba(255,255,255,0.07); border-radius:20px; padding:24px 22px;">
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <!-- Ball 1 (yellow, lower brightness) -->
+          <div style="display:flex; flex-direction:column; align-items:center; gap:4px; width:52px;">
+            <div style="width:44px; height:44px; border-radius:50%; background:#FBC400; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:14px; color:#1a1200; filter:brightness(0.55);">1</div>
+            <div style="width:34px; height:3px; background:rgba(255,255,255,0.06); border-radius:2px;"><div style="height:100%; background:#FBC400; width:55%; opacity:0.7; border-radius:2px;"></div></div>
+            <div style="font-size:11px; font-family:'JetBrains Mono',monospace; color:#6B7A96;">155</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:4px; width:52px;">
+            <div style="width:44px; height:44px; border-radius:50%; background:#FBC400; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:14px; color:#1a1200; filter:brightness(0.72);">2</div>
+            <div style="width:34px; height:3px; background:rgba(255,255,255,0.06); border-radius:2px;"><div style="height:100%; background:#FBC400; width:72%; opacity:0.7; border-radius:2px;"></div></div>
+            <div style="font-size:11px; font-family:'JetBrains Mono',monospace; color:#6B7A96;">162</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:4px; width:52px;">
+            <div style="width:44px; height:44px; border-radius:50%; background:#69C8F2; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:14px; color:#012840; filter:brightness(0.95);">14</div>
+            <div style="width:34px; height:3px; background:rgba(255,255,255,0.06); border-radius:2px;"><div style="height:100%; background:#69C8F2; width:95%; opacity:0.7; border-radius:2px;"></div></div>
+            <div style="font-size:11px; font-family:'JetBrains Mono',monospace; color:#6B7A96;">184</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:4px; width:52px;">
+            <div style="width:44px; height:44px; border-radius:50%; background:#FF7272; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:14px; color:#fff; filter:brightness(0.88);">27</div>
+            <div style="width:34px; height:3px; background:rgba(255,255,255,0.06); border-radius:2px;"><div style="height:100%; background:#FF7272; width:88%; opacity:0.7; border-radius:2px;"></div></div>
+            <div style="font-size:11px; font-family:'JetBrains Mono',monospace; color:#6B7A96;">178</div>
+          </div>
+        </div>
+        <p style="font-size:11px; color:#3D4A5E; margin:16px 0 0; font-family:'JetBrains Mono',monospace;">... 45개 번호 전체 표시</p>
+      </div>
+    </div>
+
+    <!-- HOT & COLD -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:32px;">
+      <div style="background:#0C1220; border:1px solid rgba(255,100,100,0.1); border-radius:20px; padding:26px 28px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+          <span style="font-size:20px;">🔥</span>
+          <div>
+            <div style="font-size:15px; font-weight:700; margin-bottom:3px;">최근 핫 번호</div>
+            <div style="font-size:12px; color:#4A5A72;">최근 30회 기준 상위 8개</div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:9px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:34px; height:34px; border-radius:50%; background:#69C8F2; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:13px; color:#012840;">14</div>
+            <div style="flex:1; height:5px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden;"><div style="height:100%; background:linear-gradient(90deg,#FF7272,#FF4040); border-radius:3px; width:100%;"></div></div>
+            <span style="font-size:12px; font-family:'JetBrains Mono',monospace; color:#8A9BB0; min-width:22px; text-align:right;">8</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:34px; height:34px; border-radius:50%; background:#FF7272; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:13px; color:#fff;">27</div>
+            <div style="flex:1; height:5px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden;"><div style="height:100%; background:linear-gradient(90deg,#FF7272,#FF4040); border-radius:3px; width:75%;"></div></div>
+            <span style="font-size:12px; font-family:'JetBrains Mono',monospace; color:#8A9BB0; min-width:22px; text-align:right;">6</span>
+          </div>
+        </div>
+      </div>
+      <div style="background:#0C1220; border:1px solid rgba(105,200,242,0.1); border-radius:20px; padding:26px 28px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+          <span style="font-size:20px;">❄️</span>
+          <div>
+            <div style="font-size:15px; font-weight:700; margin-bottom:3px;">장기 미출현 번호</div>
+            <div style="font-size:12px; color:#4A5A72;">마지막 출현 이후 경과 회차</div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:9px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:34px; height:34px; border-radius:50%; background:#AAB8CC; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:13px; color:#1a2030;">33</div>
+            <div style="flex:1; height:5px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden;"><div style="height:100%; background:linear-gradient(90deg,#69C8F2,#3B8FCC); border-radius:3px; width:100%;"></div></div>
+            <span style="font-size:12px; font-family:'JetBrains Mono',monospace; color:#8A9BB0; min-width:36px; text-align:right;">+22회</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:34px; height:34px; border-radius:50%; background:#58D68D; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:13px; color:#01301d;">44</div>
+            <div style="flex:1; height:5px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden;"><div style="height:100%; background:linear-gradient(90deg,#69C8F2,#3B8FCC); border-radius:3px; width:82%;"></div></div>
+            <span style="font-size:12px; font-family:'JetBrains Mono',monospace; color:#8A9BB0; min-width:36px; text-align:right;">+18회</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid rgba(255,255,255,0.05); padding:28px 36px; text-align:center;">
+    <p style="font-size:13px; color:#5A6A7A; font-weight:600; margin:0 0 7px;">⚠ 분석 도구 안내</p>
+    <p style="font-size:13px; color:#6B7A96; margin:0; max-width:540px; margin-left:auto; margin-right:auto; line-height:1.75;">Lotto Lab은 과거 당첨 데이터의 분포를 시각화하고 아직 등장하지 않은 조합을 생성하는 <span style="color:#3D4A5E; font-weight:600;">분석 도구</span>입니다.<br>당첨을 보장하지 않으며, 모든 로또 조합의 당첨 확률은 동일합니다 (1 / 8,145,060)</p>
+    <p style="font-size:11px; color:#3D4A5E; margin:14px 0 0; letter-spacing:0.5px; font-family:'JetBrains Mono',monospace;">LOTTO LAB · DATA ANALYSIS TOOL · 2026</p>
+  </footer>
+
+</div>
+</x-dc>
+</body>
+</html>
