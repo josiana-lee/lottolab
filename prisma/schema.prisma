@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Draw {
+  id        Int      @id @default(autoincrement())
+  round     Int      @unique
+  drawDate  DateTime
+  n1        Int
+  n2        Int
+  n3        Int
+  n4        Int
+  n5        Int
+  n6        Int
+  bonus     Int
+  comboKey  String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SavedCombo {
+  id            Int      @id @default(autoincrement())
+  numbers       String
+  comboKey      String   @unique
+  score         Float?
+  matchedRound  Int?
+  matchedDrawId Int?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

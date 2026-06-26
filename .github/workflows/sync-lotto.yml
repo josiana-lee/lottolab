@@ -1,0 +1,18 @@
+name: Sync Lotto Draws
+
+on:
+  schedule:
+    - cron: "0 17 * * 6"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call sync endpoint
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" -X GET "${{ secrets.APP_URL }}/api/draws/sync")
+          echo "HTTP status: $response"
+          if [ "$response" != "200" ]; then
+            exit 1
+          fi
