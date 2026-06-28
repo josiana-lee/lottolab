@@ -33,7 +33,7 @@ export async function GET() {
     const total = draws.length
     const result: PairStat[] = Object.entries(pairCounts)
       .sort(([, a], [, b]) => b - a)
-      .slice(0, 15)
+      .slice(0, 10)
       .map(([pair, count]) => {
         const [n1, n2] = pair.split('-').map(Number)
         return { pair, n1, n2, count, pct: Math.round((count / total) * 1000) / 10 }

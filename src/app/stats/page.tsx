@@ -34,8 +34,8 @@ export default function StatsPage() {
         <div className="space-y-6">
           {statsLoading ? <ChartSkeleton /> : stats ? <FreqBarChart stats={stats} /> : null}
           {statsLoading ? <PanelSkeleton /> : stats ? <HotColdPanel stats={stats} /> : null}
+          {pairsLoading ? <ChartSkeleton /> : pairs?.length ? <PairChart pairs={pairs} /> : null}
           {distLoading ? <DistributionSkeleton /> : distribution ? <DistributionChart dist={distribution} /> : null}
-          {pairsLoading ? <ChartSkeleton /> : pairs?.length ? <PairChart pairs={pairs} totalRounds={stats?.length ? Math.round(stats.reduce((s, n) => s + n.totalCount, 0) / 6) : 0} /> : null}
         </div>
       </main>
     </div>

@@ -142,15 +142,15 @@ export function MainDashboard({ latestRound, lastSync, latestNumbers, latestBonu
           </div>
         )}
 
-        {statsData && (
+        {pairData && pairData.length > 0 && (
           <div className="mb-8">
-            <FreqBarChart stats={statsData} totalRounds={latestRound} />
+            <PairChart pairs={pairData} />
           </div>
         )}
 
-        {pairData && pairData.length > 0 && (
+        {statsData && (
           <div className="mb-8">
-            <PairChart pairs={pairData} totalRounds={latestRound} />
+            <FreqBarChart stats={statsData} totalRounds={latestRound} />
           </div>
         )}
 

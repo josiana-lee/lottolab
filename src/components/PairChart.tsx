@@ -5,17 +5,16 @@ import { getBallColors } from './LottoBall'
 
 type Props = {
   pairs: PairStat[]
-  totalRounds: number
+  totalRounds?: number
 }
 
-export function PairChart({ pairs, totalRounds }: Props) {
+export function PairChart({ pairs }: Props) {
   const maxCount = pairs[0]?.count ?? 1
 
   return (
     <section className="rounded-[20px] border border-white/[0.07] bg-card px-7 py-[26px]">
-      <div className="mb-1 flex items-center justify-between gap-4">
-        <h3 className="text-[16px] font-bold tracking-[-0.3px]">자주 함께 나오는 번호 쌍 TOP 15</h3>
-        <span className="font-lotto-mono text-sm text-[#7A8BA8]">{totalRounds}회 기준</span>
+      <div className="mb-1">
+        <h3 className="text-[16px] font-bold tracking-[-0.3px]">자주 함께 나오는 번호 쌍 TOP 10</h3>
       </div>
       <p className="mb-5 text-[12px] text-[#5A6A82]">
         두 번호가 같은 회차에 동시에 당첨된 횟수 — 3개 이상 맞추고 싶다면 참고하세요
