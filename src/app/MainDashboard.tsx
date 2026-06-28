@@ -167,7 +167,14 @@ export function MainDashboard({ latestRound, lastSync, latestNumbers, latestBonu
         </div>
       </main>
       <footer className="border-t border-white/[0.05] px-9 py-7 text-center">
-        <p className="mb-[7px] text-[13px] font-semibold text-[#5A6A7A]">연구소 안내</p>
+        <p className="mb-[7px] inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#5A6A7A]">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+          연구소 안내
+        </p>
         <p className="mx-auto max-w-[540px] text-[13px] leading-[1.75] text-[#6B7A96]">
           Lotto Lab은 재미로 즐기는 로또 추첨번호 분석 대시보드입니다.
           <br />
