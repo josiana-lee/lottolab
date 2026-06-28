@@ -10,11 +10,12 @@ import { GeneratedHistory, GeneratedHistoryBatch } from '@/components/GeneratedH
 import { HotColdPanel } from '@/components/HotColdPanel'
 import { LottoHeader } from '@/components/LottoHeader'
 import { NumberHeatmap } from '@/components/NumberHeatmap'
+import { PairChart } from '@/components/PairChart'
 import { SavedComboCard } from '@/components/SavedComboCard'
 import { SyncStatusCard } from '@/components/SyncStatusCard'
 import { MAX_SAVED_COMBOS } from '@/lib/constants'
 import { useSavedCombos } from '@/hooks/useSavedCombos'
-import { fetchDistribution, fetchNumberStats, useNumberStats } from '@/hooks/useStats'
+import { fetchDistribution, fetchNumberStats, useNumberStats, usePairStats } from '@/hooks/useStats'
 import { GeneratedCombo } from '@/types/lotto'
 
 type Props = {
@@ -32,6 +33,7 @@ export function MainDashboard({ latestRound, lastSync, latestNumbers, latestBonu
   const [generatedHistory, setGeneratedHistory] = useState<GeneratedHistoryBatch[]>([])
   const queryClient = useQueryClient()
   const { data: statsData, error: statsError } = useNumberStats()
+  const { data: pairData } = usePairStats()
   const { data: savedData } = useSavedCombos()
 
   useEffect(() => {
@@ -143,6 +145,12 @@ export function MainDashboard({ latestRound, lastSync, latestNumbers, latestBonu
         {statsData && (
           <div className="mb-8">
             <FreqBarChart stats={statsData} totalRounds={latestRound} />
+          </div>
+        )}
+
+        {pairData && pairData.length > 0 && (
+          <div className="mb-8">
+            <PairChart pairs={pairData} totalRounds={latestRound} />
           </div>
         )}
 

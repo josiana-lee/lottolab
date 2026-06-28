@@ -5,12 +5,14 @@ import { DistributionChart } from '@/components/DistributionChart'
 import { FreqBarChart } from '@/components/FreqBarChart'
 import { HotColdPanel } from '@/components/HotColdPanel'
 import { LottoHeader } from '@/components/LottoHeader'
+import { PairChart } from '@/components/PairChart'
 import { ChartSkeleton, DistributionSkeleton, PanelSkeleton } from '@/components/StatsSkeleton'
-import { useDistribution, useNumberStats } from '@/hooks/useStats'
+import { useDistribution, useNumberStats, usePairStats } from '@/hooks/useStats'
 
 export default function StatsPage() {
   const { data: stats, isLoading: statsLoading, error: statsError } = useNumberStats()
   const { data: distribution, isLoading: distLoading, error: distError } = useDistribution()
+  const { data: pairs, isLoading: pairsLoading } = usePairStats()
 
   return (
     <div className="min-h-screen bg-base text-primary">
@@ -33,6 +35,7 @@ export default function StatsPage() {
           {statsLoading ? <ChartSkeleton /> : stats ? <FreqBarChart stats={stats} /> : null}
           {statsLoading ? <PanelSkeleton /> : stats ? <HotColdPanel stats={stats} /> : null}
           {distLoading ? <DistributionSkeleton /> : distribution ? <DistributionChart dist={distribution} /> : null}
+          {pairsLoading ? <ChartSkeleton /> : pairs?.length ? <PairChart pairs={pairs} totalRounds={stats?.length ? Math.round(stats.reduce((s, n) => s + n.totalCount, 0) / 6) : 0} /> : null}
         </div>
       </main>
     </div>

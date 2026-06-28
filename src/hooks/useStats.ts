@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { DistributionStats, NumberStats } from '@/types/lotto'
+import type { PairStat } from '@/app/api/stats/pairs/route'
 
 async function readJson<T>(url: string): Promise<T> {
   const res = await fetch(url)
@@ -16,6 +17,10 @@ export function fetchDistribution() {
   return readJson<DistributionStats>('/api/stats/distribution')
 }
 
+export function fetchPairStats() {
+  return readJson<PairStat[]>('/api/stats/pairs')
+}
+
 export function useNumberStats() {
   return useQuery<NumberStats[]>({
     queryKey: ['stats', 'numbers'],
@@ -27,5 +32,12 @@ export function useDistribution() {
   return useQuery<DistributionStats>({
     queryKey: ['stats', 'distribution'],
     queryFn: fetchDistribution,
+  })
+}
+
+export function usePairStats() {
+  return useQuery<PairStat[]>({
+    queryKey: ['stats', 'pairs'],
+    queryFn: fetchPairStats,
   })
 }
