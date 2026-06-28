@@ -1,0 +1,13 @@
+{
+  "name": "Lotto Lab",
+  "short_name": "LottoLAB",
+  "description": "로또 과거 당첨 데이터를 분석하는 번호 연구소",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07080F",
+  "theme_color": "#07080F",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

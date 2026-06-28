@@ -17,7 +17,7 @@ export default function StatsPage() {
       <LottoHeader />
       <main className="mx-auto max-w-[1100px] px-6 py-9 pb-20">
         <div className="mb-8 flex items-center gap-4">
-          <Link href="/" className="text-sm font-semibold text-muted hover:text-secondary">
+          <Link href="/" className="hidden text-sm font-semibold text-muted hover:text-secondary sm:inline">
             메인으로
           </Link>
           <h1 className="text-[22px] font-bold tracking-[-0.4px]">통계 분석</h1>

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { ComboCard } from '@/components/ComboCard'
+import { FreqBarChart } from '@/components/FreqBarChart'
 import { GenerateButton } from '@/components/GenerateButton'
 import { GeneratedHistory, GeneratedHistoryBatch } from '@/components/GeneratedHistory'
 import { HotColdPanel } from '@/components/HotColdPanel'
@@ -17,15 +18,16 @@ import { fetchDistribution, fetchNumberStats, useNumberStats } from '@/hooks/use
 import { GeneratedCombo } from '@/types/lotto'
 
 type Props = {
-  totalRounds: number
   latestRound: number
   lastSync: string
+  latestNumbers: number[]
+  latestBonus: number
 }
 
 const GENERATED_HISTORY_KEY = 'lotto-lab.generated-history'
 const MAX_GENERATED_HISTORY = 10
 
-export function MainDashboard({ totalRounds, latestRound, lastSync }: Props) {
+export function MainDashboard({ latestRound, lastSync, latestNumbers, latestBonus }: Props) {
   const [combos, setCombos] = useState<GeneratedCombo[]>([])
   const [generatedHistory, setGeneratedHistory] = useState<GeneratedHistoryBatch[]>([])
   const queryClient = useQueryClient()
@@ -69,18 +71,19 @@ export function MainDashboard({ totalRounds, latestRound, lastSync }: Props) {
     <div className="min-h-screen bg-base text-primary">
       <LottoHeader />
       <main className="mx-auto max-w-[1100px] px-6 py-9 pb-20">
-        <div className="mb-8">
-          <SyncStatusCard totalRounds={totalRounds} latestRound={latestRound} lastSync={lastSync} />
-        </div>
-
-        <div className="mb-8">
-          <GenerateButton totalRounds={totalRounds} onResult={handleGenerated} />
+        <div className="mb-8 flex flex-col gap-8">
+          <div className="order-2 md:order-1">
+            <SyncStatusCard latestRound={latestRound} lastSync={lastSync} latestNumbers={latestNumbers} latestBonus={latestBonus} />
+          </div>
+          <div className="order-1 md:order-2">
+            <GenerateButton totalRounds={latestRound} onResult={handleGenerated} />
+          </div>
         </div>
 
         {combos.length > 0 && (
           <section className="mb-[52px]">
             <div className="mb-[18px] flex items-center gap-3">
-              <h2 className="text-[19px] font-bold tracking-[-0.4px]">분석 조합 결과</h2>
+              <h2 className="text-[19px] font-bold tracking-[-0.4px]">실험 결과</h2>
               <span className="rounded-[20px] bg-cyan/[0.09] px-2.5 py-[3px] font-lotto-mono text-xs font-bold tracking-[0.8px] text-cyan">
                 {combos.length} COMBOS
               </span>
@@ -102,7 +105,7 @@ export function MainDashboard({ totalRounds, latestRound, lastSync }: Props) {
         {savedData && savedData.savedCombos.length > 0 && (
           <section className="mb-10">
             <div className="mb-4 flex items-center gap-3">
-              <h2 className="text-[19px] font-bold tracking-[-0.4px]">내 조합 저장함</h2>
+              <h2 className="text-[19px] font-bold tracking-[-0.4px]">저장 실험 이력</h2>
               <span className="rounded-[20px] bg-lotto-yellow/10 px-2.5 py-[3px] font-lotto-mono text-xs font-bold tracking-[0.8px] text-lotto-yellow">
                 {savedData.savedCombos.length} / {MAX_SAVED_COMBOS}
               </span>
@@ -133,7 +136,13 @@ export function MainDashboard({ totalRounds, latestRound, lastSync }: Props) {
           </div>
         )}
 
-        <div className="text-center">
+        {statsData && (
+          <div className="mb-8">
+            <FreqBarChart stats={statsData} totalRounds={latestRound} />
+          </div>
+        )}
+
+        <div className="hidden text-center sm:block">
           <Link
             href="/stats"
             onMouseEnter={prefetchStatsPage}
@@ -146,13 +155,22 @@ export function MainDashboard({ totalRounds, latestRound, lastSync }: Props) {
         </div>
       </main>
       <footer className="border-t border-white/[0.05] px-9 py-7 text-center">
-        <p className="mb-[7px] text-[13px] font-semibold text-[#5A6A7A]">분석 도구 안내</p>
+        <p className="mb-[7px] text-[13px] font-semibold text-[#5A6A7A]">연구소 안내</p>
         <p className="mx-auto max-w-[540px] text-[13px] leading-[1.75] text-[#6B7A96]">
-          Lotto Lab은 과거 당첨 데이터의 분포를 시각화하고 아직 등장하지 않은 조합을 생성하는 분석 도구입니다.
+          Lotto Lab은 재미로 즐기는 로또 추첨번호 분석 대시보드입니다.
           <br />
-          결과를 보장하지 않으며, 모든 로또 조합의 당첨 확률은 동일합니다 (1 / 8,145,060)
+          결과를 보장하지 않으며, 모든 조합의 추첨 확률은 동일합니다 (1 / 8,145,060)
         </p>
-        <p className="mt-3.5 font-lotto-mono text-[11px] tracking-[0.5px] text-[#3D4A5E]">LOTTO LAB · DATA ANALYSIS TOOL · 2026</p>
+        <div className="mt-4 flex items-center justify-center gap-4">
+          <Link href="/terms" className="text-[12px] text-[#3D4A5E] hover:text-muted">
+            이용약관
+          </Link>
+          <span className="text-[#2A3444]">·</span>
+          <Link href="/privacy" className="text-[12px] text-[#3D4A5E] hover:text-muted">
+            개인정보처리방침
+          </Link>
+        </div>
+        <p className="mt-3 font-lotto-mono text-[11px] tracking-[0.5px] text-[#3D4A5E]">LOTTO LAB · DATA ANALYSIS TOOL · 2026</p>
       </footer>
     </div>
   )

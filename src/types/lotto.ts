@@ -43,7 +43,7 @@ export type SavedComboRecord = {
 export type SyncResult = {
   synced: number[]
   message: string
-  matchedCombos: number
+  latestDraw: { round: number; numbers: number[]; bonus: number } | null
 }
 
 export type DistributionStats = {

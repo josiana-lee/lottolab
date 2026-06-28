@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/draws/sync",
+      "schedule": "40 11 * * 6"
+    }
+  ]
+}

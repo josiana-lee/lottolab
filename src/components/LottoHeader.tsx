@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { StatsNavButton } from './StatsNavButton'
 
 export function LottoHeader() {
   return (
@@ -12,9 +13,10 @@ export function LottoHeader() {
             Lotto <span className="font-lotto-mono text-[16px] tracking-[1px] text-cyan">LAB</span>
           </span>
         </Link>
+        <StatsNavButton />
         <span className="hidden items-center gap-1.5 rounded-[20px] border border-white/[0.07] bg-white/[0.04] px-3.5 py-[5px] text-[13px] text-[#4A5A72] sm:inline-flex">
           <span className="h-[5px] w-[5px] rounded-full bg-cyan" />
-          결과 보장 없음 · 과거 분포 분석 도구
+          결과 보장 없음 · 로또번호 연구소
         </span>
       </nav>
     </header>
