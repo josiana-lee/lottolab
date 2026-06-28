@@ -6,7 +6,6 @@ import { createComboKey } from '@/lib/combo'
 import { useSync } from '@/hooks/useSync'
 import { loadSavedCombos } from '@/hooks/useSavedCombos'
 import { getBallColors } from './LottoBall'
-import { PushNotifyButton } from './PushNotifyButton'
 
 type Props = {
   latestRound: number
@@ -126,17 +125,14 @@ export function SyncStatusCard({ latestRound, lastSync, latestNumbers, latestBon
             {matchedMsg && <p className="mt-1 text-xs text-cyan">{matchedMsg}</p>}
             {sync.error && <p className="mt-1 text-xs text-lotto-red">{sync.error.message}</p>}
           </div>
-          <div className="flex shrink-0 flex-col items-end gap-3">
-            <button
-              type="button"
-              onClick={() => sync.mutate()}
-              disabled={sync.isPending}
-              className="min-h-10 whitespace-nowrap rounded-[10px] border border-cyan/20 bg-cyan/[0.07] px-[18px] text-[13px] font-semibold text-cyan disabled:opacity-50"
-            >
-              {sync.isPending ? '동기화 중' : '최신 회차 동기화'}
-            </button>
-            <PushNotifyButton />
-          </div>
+          <button
+            type="button"
+            onClick={() => sync.mutate()}
+            disabled={sync.isPending}
+            className="min-h-10 shrink-0 whitespace-nowrap rounded-[10px] border border-cyan/20 bg-cyan/[0.07] px-[18px] text-[13px] font-semibold text-cyan disabled:opacity-50"
+          >
+            {sync.isPending ? '동기화 중' : '최신 회차 동기화'}
+          </button>
         </div>
       </div>
 
