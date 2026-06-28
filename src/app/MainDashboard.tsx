@@ -72,29 +72,33 @@ export function MainDashboard({ latestRound, lastSync, latestNumbers, latestBonu
       <LottoHeader />
       <main className="mx-auto max-w-[1100px] px-6 py-9 pb-20">
         <div className="mb-8 flex flex-col gap-8">
-          <div className="order-2 md:order-1">
-            <SyncStatusCard latestRound={latestRound} lastSync={lastSync} latestNumbers={latestNumbers} latestBonus={latestBonus} />
-          </div>
+          {/* 모바일: 1순위 / 데스크탑: 2순위 */}
           <div className="order-1 md:order-2">
             <GenerateButton totalRounds={latestRound} onResult={handleGenerated} />
           </div>
-        </div>
 
-        {combos.length > 0 && (
-          <section className="mb-[52px]">
-            <div className="mb-[18px] flex items-center gap-3">
-              <h2 className="text-[19px] font-bold tracking-[-0.4px]">실험 결과</h2>
-              <span className="rounded-[20px] bg-cyan/[0.09] px-2.5 py-[3px] font-lotto-mono text-xs font-bold tracking-[0.8px] text-cyan">
-                {combos.length} COMBOS
-              </span>
-            </div>
-            <div className="space-y-3">
-              {combos.map((combo, index) => (
-                <ComboCard key={combo.numbers.join('-')} combo={combo} rank={index + 1} animDelay={index * 0.08} />
-              ))}
-            </div>
-          </section>
-        )}
+          {/* 모바일: 2순위 (결과 있을 때만) / 데스크탑: 3순위 */}
+          {combos.length > 0 && (
+            <section className="order-2 md:order-3">
+              <div className="mb-[18px] flex items-center gap-3">
+                <h2 className="text-[19px] font-bold tracking-[-0.4px]">실험 결과</h2>
+                <span className="rounded-[20px] bg-cyan/[0.09] px-2.5 py-[3px] font-lotto-mono text-xs font-bold tracking-[0.8px] text-cyan">
+                  {combos.length} COMBOS
+                </span>
+              </div>
+              <div className="space-y-3">
+                {combos.map((combo, index) => (
+                  <ComboCard key={combo.numbers.join('-')} combo={combo} rank={index + 1} animDelay={index * 0.08} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* 모바일: 3순위 / 데스크탑: 1순위 */}
+          <div className="order-3 md:order-1">
+            <SyncStatusCard latestRound={latestRound} lastSync={lastSync} latestNumbers={latestNumbers} latestBonus={latestBonus} />
+          </div>
+        </div>
 
         <GeneratedHistory
           history={generatedHistory}
