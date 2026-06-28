@@ -189,7 +189,7 @@ export function MainDashboard({ latestRound, lastSync, latestNumbers, latestBonu
             개인정보처리방침
           </Link>
         </div>
-        <p className="mt-3 font-lotto-mono text-[11px] tracking-[0.5px] text-[#3D4A5E]">LOTTO LAB · DATA ANALYSIS TOOL · 2026</p>
+        <p className="mt-3 font-lotto-mono text-[11px] tracking-[0.5px] text-[#3D4A5E]">LOTTO LAB · DATA ANALYSIS TOOL · 2026 · v1.0.0</p>
       </footer>
     </div>
   )
