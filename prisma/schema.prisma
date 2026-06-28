@@ -24,16 +24,6 @@ model Draw {
   updatedAt DateTime @updatedAt
 }
 
-model SavedCombo {
-  id            Int      @id @default(autoincrement())
-  numbers       String
-  comboKey      String   @unique
-  score         Float?
-  matchedRound  Int?
-  matchedDrawId Int?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-}
 
 model PushSubscription {
   id        Int      @id @default(autoincrement())
