@@ -178,7 +178,7 @@ export function MainDashboard({ latestRound, lastSync, latestNumbers, latestBonu
         <p className="mx-auto max-w-[540px] text-[13px] leading-[1.75] text-[#6B7A96]">
           Lotto Lab은 재미로 즐기는<br className="sm:hidden" /> 로또 추첨번호 분석 대시보드입니다.
           <br />
-          결과를 보장하지 않으며, 모든 조합의 추첨 확률은 동일합니다 (1 / 8,145,060)
+          결과를 보장하지 않으며,<br className="sm:hidden" /> 모든 조합의 추첨 확률은 동일합니다 (1 / 8,145,060)
         </p>
         <div className="mt-4 flex items-center justify-center gap-4">
           <Link href="/terms" className="text-[12px] text-[#3D4A5E] hover:text-muted">
