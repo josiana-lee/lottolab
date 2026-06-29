@@ -13,3 +13,4 @@ dist
 /splash-*.png
 /splash-*.txt
 /v2-*.txt
+.vercel
