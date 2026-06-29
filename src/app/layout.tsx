@@ -18,8 +18,8 @@ export const metadata: Metadata = {
 }
 
 const splashCSS = `
-#lotto-splash{position:fixed;inset:0;background:#07080F;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;animation:splashFadeOut 3.5s ease forwards}
-@keyframes splashFadeOut{0%,80%{opacity:1}100%{opacity:0;pointer-events:none}}
+#lotto-splash{position:fixed;inset:0;background:#07080F;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;animation:splashFadeOut 4s ease forwards}
+@keyframes splashFadeOut{0%,82%{opacity:1}100%{opacity:0;pointer-events:none}}
 @keyframes glowPulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
 @keyframes iconDrop{0%{opacity:0;transform:translateY(-36px) scale(.7)}60%{opacity:1;transform:translateY(5px) scale(1.04)}80%{transform:translateY(-3px) scale(.98)}100%{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes textRise{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
@@ -32,9 +32,9 @@ const splashCSS = `
 .sp-text{display:flex;flex-direction:column;align-items:center;gap:9px;animation:textRise .55s ease 2s 1 both;opacity:0}
 .sp-title-lotto{font-family:'Space Grotesk',sans-serif;font-size:44px;font-weight:700;color:#E8EDF5;letter-spacing:-1.5px;line-height:1}
 .sp-title-lab{font-family:'JetBrains Mono',monospace;font-size:38px;font-weight:700;color:#00E5FF;letter-spacing:6px;line-height:1}
-.sp-subtitle{font-family:'JetBrains Mono',monospace;font-size:12px;color:#3D4A5E;letter-spacing:2px;text-transform:uppercase;font-weight:600;animation:tagFade .5s ease 2.4s 1 both;opacity:0}
+.sp-subtitle{font-family:'JetBrains Mono',monospace;font-size:12px;color:#6B7A96;letter-spacing:2px;text-transform:uppercase;font-weight:600;animation:tagFade .5s ease 2.4s 1 both;opacity:0}
 .sp-progress{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,.04)}
-.sp-progress-fill{height:100%;background:linear-gradient(90deg,#005BFF,#00E5FF);animation:splashProgress 3.1s linear .2s 1 both;width:0}
+.sp-progress-fill{height:100%;background:linear-gradient(90deg,#005BFF,#00E5FF);animation:splashProgress 3.5s linear .2s 1 both;width:0}
 `
 
 const splashHTML = `
@@ -116,7 +116,7 @@ const splashScript = `
   if(!el)return;
   if(sessionStorage.getItem(KEY)){el.remove();return;}
   sessionStorage.setItem(KEY,'1');
-  setTimeout(function(){if(el&&el.parentNode)el.remove();},3700);
+  setTimeout(function(){if(el&&el.parentNode)el.remove();},4200);
 })();
 `
 

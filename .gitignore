@@ -6,3 +6,10 @@ node_modules
 coverage
 dist
 *.tsbuildinfo
+
+# Local browser verification artifacts
+.playwright-mcp/
+/lotto-main.png
+/splash-*.png
+/splash-*.txt
+/v2-*.txt

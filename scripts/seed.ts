@@ -27,6 +27,7 @@ async function seedFromLottolyzer(startRound: number): Promise<number> {
   const collected = new Map<number, LottoDraw>()
 
   for (let page = 1; page <= 40; page += 1) {
+    console.log(`  Fetching page ${page}...`)
     const draws = await fetchLottolyzerPage(page, 50)
     if (draws.length === 0) break
 
@@ -35,6 +36,7 @@ async function seedFromLottolyzer(startRound: number): Promise<number> {
     }
 
     if (draws.some(draw => draw.round < startRound)) break
+    await new Promise(resolve => setTimeout(resolve, 300))
   }
 
   const sorted = [...collected.values()].sort((a, b) => a.round - b.round)
@@ -55,6 +57,15 @@ async function seedFromLottolyzer(startRound: number): Promise<number> {
   })
 
   return result.count
+}
+
+async function backfill() {
+  const before = await prisma.draw.count()
+  console.log(`Current DB count: ${before}`)
+  console.log('Fetching all rounds from Lottolyzer...')
+  const added = await seedFromLottolyzer(1)
+  const after = await prisma.draw.count()
+  console.log(`Backfill complete. Added ${added} rounds. Total: ${after}`)
 }
 
 async function seed() {
@@ -92,7 +103,10 @@ async function seed() {
   console.log(`Seed complete. Saved ${saved} rounds.`)
 }
 
-seed()
+const mode = process.argv[2]
+const fn = mode === 'backfill' ? backfill : seed
+
+fn()
   .catch(error => {
     console.error(error)
     process.exitCode = 1
