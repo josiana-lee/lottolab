@@ -109,6 +109,8 @@ const splashHTML = `
 </div>
 `
 
+const splashHeadScript = `(function(){if(sessionStorage.getItem('lotto-lab:splash-shown')){var s=document.createElement('style');s.textContent='#lotto-splash{display:none!important}';document.head.appendChild(s);}})();`
+
 const splashScript = `
 (function(){
   var KEY='lotto-lab:splash-shown';
@@ -124,6 +126,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <head>
+        <script dangerouslySetInnerHTML={{ __html: splashHeadScript }} />
         <style dangerouslySetInnerHTML={{ __html: splashCSS }} />
       </head>
       <body className="bg-base text-primary font-lotto-sans antialiased">
