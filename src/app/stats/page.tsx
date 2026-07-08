@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { ComboMatchCheck } from '@/components/ComboMatchCheck'
 import { DistributionChart } from '@/components/DistributionChart'
 import { FreqBarChart } from '@/components/FreqBarChart'
 import { HotColdPanel } from '@/components/HotColdPanel'
@@ -36,6 +37,7 @@ export default function StatsPage() {
           {statsLoading ? <PanelSkeleton /> : stats ? <HotColdPanel stats={stats} /> : null}
           {pairsLoading ? <ChartSkeleton /> : pairs?.length ? <PairChart pairs={pairs} /> : null}
           {distLoading ? <DistributionSkeleton /> : distribution ? <DistributionChart dist={distribution} /> : null}
+          <ComboMatchCheck />
         </div>
       </main>
     </div>
