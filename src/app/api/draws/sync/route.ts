@@ -45,6 +45,11 @@ export async function GET() {
         },
       })
 
+      await prisma.savedCombo.updateMany({
+        where: { comboKey: draw.comboKey, matchedRound: null },
+        data: { matchedRound: draw.round },
+      })
+
       synced.push(round)
       round += 1
     }
