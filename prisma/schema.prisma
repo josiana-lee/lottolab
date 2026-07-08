@@ -32,3 +32,16 @@ model PushSubscription {
   auth      String
   createdAt DateTime @default(now())
 }
+
+model SavedCombo {
+  id           Int      @id @default(autoincrement())
+  comboKey     String   @unique
+  n1           Int
+  n2           Int
+  n3           Int
+  n4           Int
+  n5           Int
+  n6           Int
+  createdAt    DateTime @default(now())
+  matchedRound Int?
+}
