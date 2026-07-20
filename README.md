@@ -1,93 +1,174 @@
-# lottolab
+# Lotto Lab
 
+역대 로또 6/45 당첨 데이터를 통계로 시각화하고, 제약 조건을 만족하는 번호 조합을 생성하는 웹 서비스입니다.
 
+**[lottolab-two.vercel.app](https://lottolab-two.vercel.app)**
 
-## Getting started
+---
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## 이 서비스가 하지 않는 것
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+로또 추첨은 회차마다 독립적인 무작위 사건이며, 모든 조합의 당첨 확률은 `1 / 8,145,060`(= C(45,6))으로 동일합니다.
 
-## Add your files
+**이 서비스는 당첨을 예측하거나 확률을 높이지 않습니다.** 여기서 계산하는 점수는 당첨 가능성이 아니라, 아래에 정의한 통계 기준에 조합이 얼마나 부합하는지를 나타내는 값입니다. 생성된 조합에 근거 문장을 함께 표시하는 것도 그 기준을 감추지 않기 위해서입니다.
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+---
+
+## 주요 기능
+
+| 기능 | 설명 |
+|---|---|
+| 당첨 통계 | 번호별 출현 빈도, 최근 30/100회 추세, 미출현 기간, 페어 빈도, 합계 분포 |
+| 조합 생성 | 통계 가중치 기반 추출 후 7개 제약 조건으로 필터링 |
+| 조합 저장 | 브라우저에 최대 10개 저장, 저장 시점과 신규 회차 발표 시 당첨 여부 확인 |
+| 자동 동기화 | GitHub Actions 주간 cron으로 신규 회차 수집 |
+| 푸시 알림 | 새 회차 발표 시 Web Push 발송 (구독자 한정) |
+| PWA | 홈 화면 설치 지원 |
+
+---
+
+## 기술 스택
+
+- **프레임워크** — Next.js 14 (App Router), TypeScript
+- **데이터** — Prisma, PostgreSQL
+- **클라이언트 상태** — TanStack Query
+- **시각화** — Recharts
+- **스타일** — Tailwind CSS
+- **테스트** — Jest, Testing Library
+- **인프라** — Vercel, GitHub Actions, Web Push (VAPID)
+
+---
+
+## 시작하기
+
+### 요구사항
+
+- Node.js 18.17 이상
+- pnpm 9 (`packageManager` 필드로 고정)
+- PostgreSQL 데이터베이스
+
+### 설치
+
+```bash
+pnpm install
+cp .env.local.example .env.local   # 값을 채워 넣습니다
+```
+
+### 환경 변수
+
+| 변수 | 필수 | 설명 |
+|---|:---:|---|
+| `DATABASE_URL` | ✅ | PostgreSQL 연결 문자열 (커넥션 풀링) |
+| `DIRECT_URL` | ✅ | 마이그레이션용 직접 연결 문자열 |
+| `VAPID_EMAIL` | | 푸시 발송자 연락처 (`mailto:` 형식) |
+| `NEXT_PUBLIC_VAPID_PUBLIC_KEY` | | VAPID 공개 키 |
+| `VAPID_PRIVATE_KEY` | | VAPID 비밀 키 |
+
+VAPID 키가 없으면 푸시 알림만 비활성화되고 나머지 기능은 정상 동작합니다. 키는 아래로 생성합니다.
+
+```bash
+npx web-push generate-vapid-keys
+```
+
+GitHub Actions에는 별도로 `APP_URL` 시크릿이 필요합니다. 배포된 서비스 주소를 넣습니다.
+
+### 데이터베이스 준비
+
+```bash
+pnpm prisma:migrate    # 스키마 적용
+pnpm seed              # 역대 당첨 데이터 수집
+```
+
+`seed`는 공식 API와 보조 출처를 오가며 전 회차를 수집하므로 몇 분 걸립니다.
+
+### 실행
+
+```bash
+pnpm dev       # 개발 서버
+pnpm test      # 단위 테스트
+pnpm build     # 프로덕션 빌드 (prisma generate 포함)
+```
+
+---
+
+## 구조
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/rurung/lottolab.git
-git branch -M main
-git push -uf origin main
+src/
+├─ app/
+│  ├─ api/
+│  │  ├─ draws/sync/       신규 회차 동기화 + 당첨 갱신 + 푸시 발송
+│  │  ├─ draws/match/      특정 조합의 당첨 이력 조회
+│  │  ├─ generate/         조합 생성
+│  │  ├─ combos/matches/   당첨된 생성 조합 통계
+│  │  ├─ stats/            번호별 · 분포 · 페어 통계
+│  │  └─ push/             구독 · 해지 · 테스트 발송
+│  ├─ stats/               통계 상세 페이지
+│  └─ MainDashboard.tsx
+├─ components/             차트 · 카드 · 패널
+├─ hooks/                  TanStack Query 래퍼 · 저장 조합 관리
+├─ lib/
+│  ├─ analyzer.ts       번호별 통계 산출
+│  ├─ scorer.ts         조합 점수 계산
+│  ├─ combo.ts          조합 속성 계산 · 유효성 검사
+│  ├─ generator.ts      가중 추출 + 필터링
+│  └─ lotto-api.ts      외부 데이터 수집 (폴백 포함)
+└─ types/
 ```
 
-## Integrate with your tools
+`lib/` 아래 로직은 React와 Prisma에 의존하지 않는 순수 함수로 두었습니다. 덕분에 목 없이 테스트할 수 있습니다.
 
-* [Set up project integrations](https://gitlab.com/rurung/lottolab/-/settings/integrations)
+```
+Test Suites: 4 passed, 4 total
+Tests:       18 passed, 18 total
+```
 
-## Collaborate with your team
+---
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+## 설계 메모
 
-## Test and Deploy
+### 데이터 수집 이중화
 
-Use the built-in continuous integration in GitLab.
+공식 API(`dhlottery.co.kr`)를 우선 사용하고, 실패하면 보조 출처를 파싱합니다. 이 API는 존재하지 않는 회차에도 HTTP 200을 반환하고 본문에 `returnValue: "fail"`을 담기 때문에, 상태 코드가 아니라 응답 본문까지 확인한 뒤 성공으로 처리합니다.
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+보조 출처는 HTML 파싱이라 형식이 어긋나면 해당 행을 통째로 버립니다. 당첨 번호가 한 번 잘못 저장되면 통계 전체와 저장 조합의 당첨 판정까지 오염되므로, 틀린 데이터보다 없는 데이터가 낫다고 판단했습니다.
 
-***
+### 증분 동기화
 
-# Editing this README
+저장된 마지막 회차 다음부터 조회할 수 없을 때까지 순차 수집하고 `upsert`로 저장합니다. cron이 여러 주 실패해도 다음 성공 실행 한 번으로 밀린 회차가 모두 복구되며, 중복 실행해도 결과가 같습니다.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+동기화 성공 시 저장된 조합의 당첨 여부를 갱신하고 푸시를 발송합니다. 푸시는 `Promise.allSettled`로 보내 일부 실패가 전체를 막지 않게 했고, 발송에 실패한 구독은 만료된 것으로 보고 그 자리에서 삭제합니다.
 
-## Suggestions for a good README
+### 저장 조합과 서버 기록의 분리
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+사용자가 저장한 조합은 브라우저 `localStorage`에 보관합니다. 로그인 없이 쓰는 서비스라 개인 선택을 서버에 남길 이유가 없다고 판단했습니다.
 
-## Name
-Choose a self-explaining name for your project.
+서버의 `SavedCombo` 테이블은 이와 별개로 **생성기가 만들어낸 조합**을 기록해, 신규 회차 동기화 시 당첨 여부를 갱신합니다. 조합을 정렬해 `1-8-15-22-33-41` 형태의 문자열 키로 저장하므로 당첨 번호와 문자열 하나만 비교하면 되고, 키에 `@unique`를 걸어 중복을 막습니다.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+### 조합 생성
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+1. 번호별로 최근 출현(hot)과 미출현 기간(cold)을 점수화합니다. 표본 크기가 다른 구간을 비교할 수 있도록 관측 횟수를 기대 출현율(`6/45`)로 나눠 정규화합니다.
+2. 점수를 확률 가중치로 변환해 추출합니다. 가중치에 하한을 두어 낮은 점수의 번호도 뽑힐 수 있게 했습니다. 하한이 없으면 매번 비슷한 조합만 생성됩니다.
+3. 아래 조건으로 필터링한 뒤 점수 상위를 반환합니다.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+| 조건 |
+|---|
+| 과거 당첨 조합 제외 |
+| 번호 합계 90 ~ 190 |
+| 전부 홀수 / 전부 짝수 제외 |
+| 전부 저번호 / 전부 고번호 제외 |
+| 4연속 이상 제외 |
+| 같은 끝자리 4개 이상 제외 |
+| 같은 10번대 5개 이상 제외 |
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+제약이 많아 후보를 찾지 못할 수 있으므로 시도 횟수에 상한을 두었습니다.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+### 디자인
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+색상 토큰과 컴포넌트 규칙은 [DESIGN.md](./DESIGN.md)에 정리되어 있습니다.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+---
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+## 라이선스
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+개인 학습 목적으로 만든 프로젝트입니다.
