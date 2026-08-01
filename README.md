@@ -63,6 +63,7 @@ cp .env.local.example .env.local   # 값을 채워 넣습니다
 | `VAPID_EMAIL` | | 푸시 발송자 연락처 (`mailto:` 형식) |
 | `NEXT_PUBLIC_VAPID_PUBLIC_KEY` | | VAPID 공개 키 |
 | `VAPID_PRIVATE_KEY` | | VAPID 비밀 키 |
+| `CRON_SECRET` | | `/api/draws/sync` 보호용 시크릿. 비워두면 인증 없이 호출 가능(로컬 개발용) |
 
 VAPID 키가 없으면 푸시 알림만 비활성화되고 나머지 기능은 정상 동작합니다. 키는 아래로 생성합니다.
 
@@ -70,7 +71,9 @@ VAPID 키가 없으면 푸시 알림만 비활성화되고 나머지 기능은 �
 npx web-push generate-vapid-keys
 ```
 
-GitHub Actions에는 별도로 `APP_URL` 시크릿이 필요합니다. 배포된 서비스 주소를 넣습니다.
+배포 시 `CRON_SECRET`을 반드시 설정하세요. Vercel Cron은 이 값을 `Authorization: Bearer <값>` 헤더로 자동 전송합니다.
+
+GitHub Actions에는 별도로 `APP_URL`, `CRON_SECRET` 시크릿이 필요합니다. `APP_URL`은 배포된 서비스 주소, `CRON_SECRET`은 Vercel에 설정한 것과 동일한 값을 넣습니다.
 
 ### 데이터베이스 준비
 

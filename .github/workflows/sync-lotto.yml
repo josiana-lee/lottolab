@@ -11,7 +11,9 @@ jobs:
     steps:
       - name: Call sync endpoint
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" -X GET "${{ secrets.APP_URL }}/api/draws/sync")
+          response=$(curl -s -o /dev/null -w "%{http_code}" -X GET \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "${{ secrets.APP_URL }}/api/draws/sync")
           echo "HTTP status: $response"
           if [ "$response" != "200" ]; then
             exit 1

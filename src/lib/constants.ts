@@ -16,3 +16,4 @@ export const LOW_NUMBER_THRESHOLD = 22
 export const COMBO_CANDIDATES = 50_000
 export const MIN_SUM = 90
 export const MAX_SUM = 190
+export const MAX_ROUNDS_PER_SYNC = 20

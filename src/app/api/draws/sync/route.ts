@@ -1,8 +1,9 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import webpush from 'web-push'
 import { prisma } from '@/lib/db'
-import { hasDatabaseConfig } from '@/lib/env'
+import { hasDatabaseConfig, isCronAuthorized } from '@/lib/env'
 import { fetchLottoDraw } from '@/lib/lotto-api'
+import { MAX_ROUNDS_PER_SYNC } from '@/lib/constants'
 
 if (process.env.VAPID_EMAIL && process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
   webpush.setVapidDetails(
@@ -14,8 +15,12 @@ if (process.env.VAPID_EMAIL && process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY && proce
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    if (!isCronAuthorized(req.headers.get('authorization'))) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     if (!hasDatabaseConfig()) {
       return NextResponse.json({ error: 'DATABASE_URL 설정이 필요합니다.' }, { status: 503 })
     }
@@ -24,7 +29,7 @@ export async function GET() {
     let round = (lastDraw?.round ?? 0) + 1
     const synced: number[] = []
 
-    while (true) {
+    while (synced.length < MAX_ROUNDS_PER_SYNC) {
       const draw = await fetchLottoDraw(round)
       if (!draw) break
 

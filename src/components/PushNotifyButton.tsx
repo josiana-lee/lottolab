@@ -83,7 +83,7 @@ export function PushNotifyButton() {
     await fetch('/api/push/test', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(sub),
+      body: JSON.stringify({ endpoint: sub.endpoint }),
     })
     setTesting(false)
   }
