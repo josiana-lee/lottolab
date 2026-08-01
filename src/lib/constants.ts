@@ -1,4 +1,5 @@
 export const LOTTO_API_BASE = 'https://www.dhlottery.co.kr/common.do'
+export const SITE_URL = 'https://lottolab-two.vercel.app'
 
 export const SCORE_WEIGHTS = {
   totalFrequency: 0.15,

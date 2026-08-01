@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Providers } from './providers'
+import { SITE_URL } from '@/lib/constants'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'Lotto Lab',
   description: '로또 과거 당첨 데이터를 분석하는 번호 연구소',
   icons: {
