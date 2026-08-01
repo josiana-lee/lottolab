@@ -144,6 +144,7 @@ export default function PrivacyPage() {
             </p>
             <div className="mt-3 space-y-1">
               <p><span className="font-semibold text-primary">▶ 개인정보 보호책임자</span></p>
+              <p>상호: JDB Labs</p>
               <p>성명: 이승미</p>
               <p>이메일: <span className="text-cyan">shuringpp@gmail.com</span></p>
             </div>

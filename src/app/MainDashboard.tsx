@@ -190,6 +190,7 @@ export function MainDashboard({ latestRound, lastSync, latestNumbers, latestBonu
           </Link>
         </div>
         <p className="mt-3 font-lotto-mono text-[11px] tracking-[0.5px] text-[#3D4A5E]">LOTTO LAB · DATA ANALYSIS TOOL · 2026 · v1.0.0</p>
+        <p className="mt-1 text-[11px] text-[#2A3444]">ⓒ 2026 JDB Labs</p>
       </footer>
     </div>
   )
