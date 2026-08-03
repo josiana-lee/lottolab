@@ -3,17 +3,28 @@
   "name": "Lotto Lab",
   "short_name": "LottoLAB",
   "description": "로또 과거 당첨 데이터를 분석하는 번호 연구소",
+  "lang": "ko",
+  "dir": "ltr",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "categories": ["utilities", "entertainment"],
   "prefer_related_applications": false,
+  "launch_handler": { "client_mode": "focus-existing" },
   "background_color": "#07080F",
   "theme_color": "#07080F",
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
     { "src": "/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "번호별 통계",
+      "short_name": "통계",
+      "url": "/stats",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
   ]
 }
