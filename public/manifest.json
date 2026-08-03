@@ -6,6 +6,9 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
+  "categories": ["utilities", "entertainment"],
+  "prefer_related_applications": false,
   "background_color": "#07080F",
   "theme_color": "#07080F",
   "icons": [
