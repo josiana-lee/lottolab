@@ -166,7 +166,7 @@ export function MainDashboard({ latestRound, lastSync, latestNumbers, latestBonu
           </Link>
         </div>
       </main>
-      <footer className="border-t border-white/[0.05] px-9 pb-[76px] pt-7 text-center sm:pb-7">
+      <footer className="border-t border-white/[0.05] px-9 py-7 text-center">
         <p className="mb-[7px] inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#5A6A7A]">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <line x1="18" y1="20" x2="18" y2="10" />

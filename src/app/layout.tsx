@@ -132,7 +132,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: splashHeadScript }} />
         <style dangerouslySetInnerHTML={{ __html: splashCSS }} />
       </head>
-      <body className="bg-base text-primary font-lotto-sans antialiased">
+      <body className="bg-base text-primary font-lotto-sans antialiased pb-[62px] sm:pb-[102px]">
         <div dangerouslySetInnerHTML={{ __html: splashHTML }} />
         <script dangerouslySetInnerHTML={{ __html: splashScript }} />
         <Providers>{children}</Providers>
