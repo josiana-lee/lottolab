@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Providers } from './providers'
+import { KakaoAdBanner } from '@/components/KakaoAdBanner'
 import { SITE_URL } from '@/lib/constants'
 
 export const metadata: Metadata = {
@@ -135,6 +136,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div dangerouslySetInnerHTML={{ __html: splashHTML }} />
         <script dangerouslySetInnerHTML={{ __html: splashScript }} />
         <Providers>{children}</Providers>
+        <KakaoAdBanner />
       </body>
     </html>
   )
