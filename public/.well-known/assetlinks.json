@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.vercel.lottolab_two.twa",
+        "sha256_cert_fingerprints": ["4E:75:43:34:07:A9:FF:A6:15:10:F4:EB:3E:87:2B:CB:0D:70:50:77:69:5A:7E:8B:EE:99:0C:01:C7:ED:7B:1C"]
+      }
+    }]
