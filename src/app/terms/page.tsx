@@ -111,7 +111,7 @@ export default function TermsPage() {
               이용약관에 관한 문의사항은 아래 연락처로 문의하시기 바랍니다.
             </p>
             <div className="mt-2">
-              <p>이메일: <span className="text-cyan">shuringpp@gmail.com</span></p>
+              <p>이메일: <span className="text-cyan">jdblabskento@gmail.com</span></p>
             </div>
           </Section>
 

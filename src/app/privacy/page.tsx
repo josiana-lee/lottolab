@@ -146,7 +146,7 @@ export default function PrivacyPage() {
               <p><span className="font-semibold text-primary">▶ 개인정보 보호책임자</span></p>
               <p>상호: JDB Labs</p>
               <p>성명: KENTO.LEE</p>
-              <p>이메일: <span className="text-cyan">shuringpp@gmail.com</span></p>
+              <p>이메일: <span className="text-cyan">jdblabskento@gmail.com</span></p>
             </div>
             <p className="mt-3">
               정보주체는 서비스를 이용하시면서 발생한 모든 개인정보 보호 관련 문의, 불만처리,
