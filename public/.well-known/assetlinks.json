@@ -3,6 +3,9 @@
       "target": {
         "namespace": "android_app",
         "package_name": "app.jdblabs.lottolab",
-        "sha256_cert_fingerprints": ["89:B3:81:ED:55:AC:3F:66:02:C4:8D:37:FE:11:A4:60:7D:7C:DF:81:DC:0F:4B:8B:63:04:13:DC:B6:2C:63:D7"]
+        "sha256_cert_fingerprints": [
+          "89:B3:81:ED:55:AC:3F:66:02:C4:8D:37:FE:11:A4:60:7D:7C:DF:81:DC:0F:4B:8B:63:04:13:DC:B6:2C:63:D7",
+          "21:EC:D2:F9:AB:43:42:9C:C5:6C:E9:6A:7B:79:12:4F:58:C2:B6:81:2F:FC:23:8A:DC:C3:7D:45:33:FF:89:7A"
+        ]
       }
     }]
