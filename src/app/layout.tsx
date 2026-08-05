@@ -112,15 +112,15 @@ const splashHTML = `
 </div>
 `
 
-const splashHeadScript = `(function(){if(sessionStorage.getItem('lotto-lab:splash-shown')){var s=document.createElement('style');s.textContent='#lotto-splash{display:none!important}';document.head.appendChild(s);}})();`
+const splashHeadScript = `(function(){if(localStorage.getItem('lotto-lab:splash-shown')){var s=document.createElement('style');s.textContent='#lotto-splash{display:none!important}';document.head.appendChild(s);}})();`
 
 const splashScript = `
 (function(){
   var KEY='lotto-lab:splash-shown';
   var el=document.getElementById('lotto-splash');
   if(!el)return;
-  if(sessionStorage.getItem(KEY)){el.remove();return;}
-  sessionStorage.setItem(KEY,'1');
+  if(localStorage.getItem(KEY)){el.remove();return;}
+  localStorage.setItem(KEY,'1');
   setTimeout(function(){if(el&&el.parentNode)el.remove();},4200);
 })();
 `
