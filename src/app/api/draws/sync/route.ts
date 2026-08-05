@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import webpush from 'web-push'
 import { prisma } from '@/lib/db'
-import { hasDatabaseConfig, isCronAuthorized } from '@/lib/env'
+import { hasDatabaseConfig, isSyncRequestAuthorized } from '@/lib/env'
 import { fetchLottoDraw } from '@/lib/lotto-api'
 import { MAX_ROUNDS_PER_SYNC } from '@/lib/constants'
 
@@ -17,7 +17,11 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(req: NextRequest) {
   try {
-    if (!isCronAuthorized(req.headers.get('authorization'))) {
+    const authorized = isSyncRequestAuthorized({
+      authorization: req.headers.get('authorization'),
+      secFetchSite: req.headers.get('sec-fetch-site'),
+    })
+    if (!authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
